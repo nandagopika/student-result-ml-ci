@@ -49,8 +49,7 @@ jobs:
             student_result_model_missing.pkl
             metrics.json
             student_results.csv
-          if-no-files-found: error
-          retention-days: 7
+        
 
 
         
