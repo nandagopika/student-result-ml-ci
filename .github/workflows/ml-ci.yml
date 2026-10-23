@@ -41,7 +41,7 @@ jobs:
       - name: Run automated ML tests
         run: python -m unittest discover -v
         
-      - name: Upload validated ML artifacts
+      - name: student_result_model_missing.pkl
         uses: actions/upload-artifact@v7
         with:
           name: student-result-ml-artifacts
