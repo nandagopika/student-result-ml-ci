@@ -1,4 +1,3 @@
-
 from pathlib import Path
 
 import joblib
@@ -28,6 +27,7 @@ def load_model():
 
 
 @app.get("/")
+@app.get("/health")
 def health_check():
     return jsonify({
         "status": "ok",
