@@ -16,6 +16,7 @@ class TestPredictionApplication(unittest.TestCase):
             self.assertEqual(
                 response.get_json()["status"], "ok"
             )
+            self.assertIn("X-Request-ID", response.headers)
 
     def test_high_performance_prediction(self):
         response = self.client.post(
@@ -62,6 +63,29 @@ class TestPredictionApplication(unittest.TestCase):
         self.assertIn(
             "missing_fields", response.get_json()
         )
+
+    def test_prometheus_metrics_endpoint(self):
+        response = self.client.get("/metrics")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            "student_api_model_loaded",
+            response.get_data(as_text=True),
+        )
+
+    def test_metrics_count_requests(self):
+        self.client.get("/health")
+        response = self.client.get("/metrics")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            'student_api_http_requests_total{method="GET",path="/health",status="200"}',
+            response.get_data(as_text=True),
+        )
+
+    def test_unknown_route_returns_404(self):
+        response = self.client.get("/not-a-real-route")
+        self.assertEqual(response.status_code, 404)
 
 
 if __name__ == "__main__":
