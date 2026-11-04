@@ -37,6 +37,9 @@ jobs:
       - name: Check model quality gate
         run: python quality_gate.py
 
+      - name: Run application and ML tests
+        run: python -m unittest test_ml_pipeline.py test_app.py -v
+
       - name: Build Docker image
         run: docker build -t $IMAGE_NAME:ci .
 
