@@ -215,7 +215,7 @@ up{job="student-result-api"}
 histogram_quantile(0.95, sum by (le) (rate(student_api_http_request_duration_seconds_bucket[5m])))
 ```
 
-The alert rules cover repeated 4xx responses, 5xx responses, a failed scrape target, and a model-readiness value of zero. Prometheus evaluates and displays alert states; notification delivery requires a separately configured Alertmanager/receiver.
+The alert rules cover repeated 4xx responses, 5xx responses, and a failed scrape target. Model readiness is displayed separately in the Grafana dashboard. Prometheus evaluates and displays alert states; notification delivery requires a separately configured Alertmanager/receiver.
 
 ### 6. Stop the local monitoring stack
 
