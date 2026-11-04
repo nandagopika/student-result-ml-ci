@@ -27,12 +27,3 @@ groups:
         annotations:
           summary: "Student Result API monitoring target is down"
           description: "Prometheus cannot scrape the deployed API /metrics endpoint."
-
-      - alert: StudentAPIModelNotLoaded
-        expr: student_api_model_loaded == 0
-        for: 30s
-        labels:
-          severity: critical
-        annotations:
-          summary: "Student Result Prediction model is not loaded"
-          description: "The API reports that its model is not ready."
