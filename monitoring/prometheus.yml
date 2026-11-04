@@ -12,4 +12,4 @@ scrape_configs:
     static_configs:
       # Replace with the actual Render hostname (without https://).
       - targets:
-          - "YOUR-RENDER-SERVICE.onrender.com"
+         - "student-result-prediction.onrender.com"
