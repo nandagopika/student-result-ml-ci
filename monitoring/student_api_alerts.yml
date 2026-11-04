@@ -1,0 +1,38 @@
+groups:
+  - name: student-result-api-alerts
+    rules:
+      - alert: StudentAPIClientErrors
+        expr: sum(rate(student_api_http_requests_total{status=~"4.."}[2m])) > 0
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: "Student Result API is receiving client errors"
+          description: "4xx responses have been observed during the recent window."
+
+      - alert: StudentAPIServerErrors
+        expr: sum(rate(student_api_http_requests_total{status=~"5.."}[2m])) > 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Student Result API is returning server errors"
+          description: "5xx responses have been observed during the recent window."
+
+      - alert: StudentAPIDown
+        expr: up{job="student-result-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Student Result API monitoring target is down"
+          description: "Prometheus cannot scrape the deployed API /metrics endpoint."
+
+      - alert: StudentAPIModelNotLoaded
+        expr: student_api_model_loaded == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Student Result Prediction model is not loaded"
+          description: "The API reports that its model is not ready."
